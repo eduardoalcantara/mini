@@ -100,7 +100,7 @@
 ### Gerenciador de Tarefas
 
 - O MINI deverá ter um painel de Gerenciador de Tarefas, que pode ser configurado para ficar na esquerda no ludar da lista de arquivos, ou coexistir com ele, ficando na direita do editor de textos.
-- A lista de tarefas fica no painel. O usuário pode clicar em (+) para adicionar uma tarefa simples, agendada, item de compras ou tarefa complexa.
+- A lista de tarefas fica no painel. O usuário pode clicar em (+) para adicionar uma tarefa simples, agendada, recorrente, item de compras ou tarefa complexa.
 - Deverá haver um botão de limpeza de tarefas concluídas e um histórico de tarefas concluídas e exluídas.
 - O usuário poderá configurar em quantos dias ou horas as tarefas concluídas sairão da lista de tarefas concluídas.
 - As tarefas simples entram com a descrição e um simples ENTER.
@@ -108,11 +108,15 @@
 - AS tarefas agendadas entram depois de uma descrição, ENTER, depois informa a data e/ou a hora(ou escreve HOJE ou AMANHÃ) e ENTER.
 - As tarefas atrasadas podem ter status de iminente, atradada e realizada
 - As tarefas complexas quando criadas, abrem uma aba de arquivo de texto para o usuário descrever a tarefas, colocar subtarefas etc. As tarefas complexas podem ter status de não iniciada, iniciada, realizada.
-- O MINI deve oferecer configuração de SMTP para envio de notificação de tarefas diariamente e tarefas agendadas.
+- As tarefas de listas de compras... PENDENTE DE FINALIZAÇÃO 
+- As tarefas recorrentes são criadas indicando o tipo de recorrência, como diária, semanal, quinzenal, mensal, e é possível especificar o dia da inserção como número ou dia da semana, como por exemplo se o usuário quiser colocar tarefas de pagamentos de contas. 
+- O MINI deve oferecer configuração de SMTP para envio de notificação de tarefas, diariamente e tarefas agendadas.
+- O usuário pode inserir tags em tarefas. 
+- O usuário pode filtrar tarefas por texto, por tag e por tipo. 
 
 ### Modo Pasta/Projeto/Repositório e Modo Solto
 
-- No modo Pasta, o MINI mostra o painel com os asrquivos e subpastas da pasta aberta, como já mencionado.
+- No modo Pasta, o MINI mostra o painel com os arquivos e subpastas da pasta aberta, como já mencionado.
 - No modo Solto, o MINI mostra arquivos abertos de vários locais e discos
 - Se o usuário fechar a pasta, o MINI deve voltar ao modo Solto, reabrindo as abas de arquivos que estavam abertos antes de se abrir o MINI no modo pasta, para que o usuário não tenha que procurar todos os arquivos anteriormente abertos.
 
