@@ -855,8 +855,9 @@ zed_actions = { codegen-units = 1 }
 
 [profile.release]
 debug = "limited"
+opt-level = 2          # Reduzido de 3 para 2 (economiza RAM)
 lto = "thin"
-codegen-units = 1
+codegen-units = 16     # Aumentado de 1 para 16 (distribui carga)
 
 [profile.release.package]
 zed = { codegen-units = 16 }
