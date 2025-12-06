@@ -24,6 +24,8 @@
   - Bloqueado pelo usuário para não movimentar livremente, mas pode escolher a posição no tray e tamanho nas configurações;
   - Movimentação livre;
   - Movimentação assistida pela tecla Ctrl para deslizar no eixo Y e Shift para deslizar no eixo X.
+- Sempre que o MINI for minimizado ou reaparecer, a janela deve aparecer/desaparecer em fade-in/fade-out. 
+
 
 ### Itens Mostrados na Janela
 
