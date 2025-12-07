@@ -36,7 +36,6 @@
 - Se precisar limpar dependências: `cargo clean` (seguro e recomendado).
 - **NUNCA execute scripts de build/compilação em modo silencioso** sem verificar erros.
 
-<<<<<<< HEAD
 ### Script de Compilação Obrigatório
 
 - **SEMPRE use o script `project-mini/scripts/run.ps1`** para compilar o projeto, especialmente durante as fases de implementação.
@@ -100,8 +99,6 @@
 - **Verificação:**
     - Antes de executar comandos críticos, verifique se PowerShell Core 7 está disponível:shell
     Test-Path "C:\Program Files\PowerShell\7\pwsh.exe"
-=======
->>>>>>> 274507d6cca54c26c9e1728736ad5e7a8b0c1274
 
 ### Gerenciamento de Contexto
 
