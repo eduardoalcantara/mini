@@ -1,5 +1,5 @@
 mod reliability;
-mod zed;
+mod mini;
 
 use agent_ui::AgentPanel;
 use anyhow::{Context as _, Error, Result};
@@ -47,21 +47,21 @@ use workspace::{
     AppState, PathList, SerializedWorkspaceLocation, Toast, Workspace, WorkspaceSettings,
     WorkspaceStore, notifications::NotificationId,
 };
-use zed::{
+use mini::{
     OpenListener, OpenRequest, RawOpenRequest, app_menus, build_window_options,
     derive_paths_with_position, edit_prediction_registry, handle_cli_connection,
     handle_keymap_file_changes, handle_settings_file_changes, initialize_workspace,
     open_paths_with_positions,
 };
 
-use crate::zed::{OpenRequestKind, eager_load_active_theme_and_icon_theme};
+use crate::mini::{OpenRequestKind, eager_load_active_theme_and_icon_theme};
 
 #[cfg(feature = "mimalloc")]
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 fn files_not_created_on_launch(errors: HashMap<io::ErrorKind, Vec<&Path>>) {
-    let message = "Zed failed to launch";
+    let message = "mini failed to launch";
     let error_details = errors
         .into_iter()
         .flat_map(|(kind, paths)| {
@@ -123,7 +123,7 @@ fn fail_to_open_window_async(e: anyhow::Error, cx: &mut AsyncApp) {
 
 fn fail_to_open_window(e: anyhow::Error, _cx: &mut App) {
     eprintln!(
-        "Zed failed to open a window: {e:?}. See https://zed.dev/docs/linux for troubleshooting steps."
+        "mini failed to open a window: {e:?}. See https://mini-editor.com/docs/linux for troubleshooting steps."
     );
     #[cfg(not(any(target_os = "linux", target_os = "freebsd")))]
     {
@@ -142,10 +142,10 @@ fn fail_to_open_window(e: anyhow::Error, _cx: &mut App) {
             proxy
                 .add_notification(
                     notification_id,
-                    Notification::new("Zed failed to launch")
+                    Notification::new("mini failed to launch")
                         .body(Some(
                             format!(
-                                "{e:?}. See https://zed.dev/docs/linux for troubleshooting steps."
+                                "{e:?}. See https://mini-editor.com/docs/linux for troubleshooting steps."
                             )
                             .as_str(),
                         ))
@@ -173,20 +173,20 @@ pub fn main() {
 
     let args = Args::parse();
 
-    // `zed --askpass` Makes zed operate in nc/netcat mode for use with askpass
+    // `mini --askpass` Makes mini operate in nc/netcat mode for use with askpass
     #[cfg(not(target_os = "windows"))]
     if let Some(socket) = &args.askpass {
         askpass::main(socket);
         return;
     }
 
-    // `zed --crash-handler` Makes zed operate in minidump crash handler mode
+    // `mini --crash-handler` Makes mini operate in minidump crash handler mode
     if let Some(socket) = &args.crash_handler {
         crashes::crash_server(socket.as_path());
         return;
     }
 
-    // `zed --nc` Makes zed operate in nc/netcat mode for use with MCP
+    // `mini --nc` Makes mini operate in nc/netcat mode for use with MCP
     if let Some(socket) = &args.nc {
         match nc::main(socket) {
             Ok(()) => return,
@@ -206,7 +206,7 @@ pub fn main() {
         }
     }
 
-    // `zed --printenv` Outputs environment variables as JSON to stdout
+    // `mini --printenv` Outputs environment variables as JSON to stdout
     if args.printenv {
         util::shell_env::print_env();
         return;
@@ -261,7 +261,7 @@ pub fn main() {
             app_commit_sha,
             *release_channel::RELEASE_CHANNEL,
         );
-        println!("Zed System Specs (from CLI):\n{}", system_specs);
+        println!("mini System Specs (from CLI):\n{}", system_specs);
         return;
     }
 
@@ -273,7 +273,7 @@ pub fn main() {
         .unwrap();
 
     log::info!(
-        "========== starting zed version {}, sha {} ==========",
+        "========== starting mini version {}, sha {} ==========",
         app_version,
         app_commit_sha
             .as_ref()
@@ -298,7 +298,7 @@ pub fn main() {
         .spawn(crashes::init(InitCrashHandler {
             session_id,
             zed_version: app_version.to_string(),
-            binary: "zed".to_string(),
+            binary: "mini".to_string(),
             release_channel: release_channel::RELEASE_CHANNEL_NAME.clone(),
             commit_sha: app_commit_sha
                 .as_ref()
@@ -316,22 +316,22 @@ pub fn main() {
     } else {
         #[cfg(any(target_os = "linux", target_os = "freebsd"))]
         {
-            crate::zed::listen_for_cli_connections(open_listener.clone()).is_err()
+            crate::mini::listen_for_cli_connections(open_listener.clone()).is_err()
         }
 
         #[cfg(target_os = "windows")]
         {
-            !crate::zed::windows_only_instance::handle_single_instance(open_listener.clone(), &args)
+            !crate::mini::windows_only_instance::handle_single_instance(open_listener.clone(), &args)
         }
 
         #[cfg(target_os = "macos")]
         {
-            use zed::mac_only_instance::*;
+            use mini::mac_only_instance::*;
             ensure_only_instance() != IsOnlyInstance::Yes
         }
     };
     if failed_single_instance_check {
-        println!("zed is already running");
+        println!("mini is already running");
         return;
     }
 
@@ -418,7 +418,7 @@ pub fn main() {
         handle_keymap_file_changes(user_keymap_file_rx, cx);
 
         let user_agent = format!(
-            "Zed/{} ({}; {})",
+            "mini/{} ({}; {})",
             AppVersion::global(cx),
             std::env::consts::OS,
             std::env::consts::ARCH
@@ -502,7 +502,7 @@ pub fn main() {
 
         Client::set_global(client.clone(), cx);
 
-        zed::init(cx);
+        mini::init(cx);
         project::Project::init(&client, cx);
         debugger_ui::init(cx);
         debugger_tools::init(cx);
@@ -754,7 +754,7 @@ pub fn main() {
 
         let app_state = app_state.clone();
 
-        crate::zed::component_preview::init(app_state.clone(), cx);
+        crate::mini::component_preview::init(app_state.clone(), cx);
 
         cx.spawn(async move |cx| {
             while let Some(urls) = open_rx.next().await {
@@ -1249,14 +1249,14 @@ pub fn stdout_is_a_pty() -> bool {
 }
 
 #[derive(Parser, Debug)]
-#[command(name = "zed", disable_version_flag = true, max_term_width = 100)]
+#[command(name = "mini", disable_version_flag = true, max_term_width = 100)]
 struct Args {
     /// A sequence of space-separated paths or urls that you want to open.
     ///
     /// Use `path:line:row` syntax to open a file at a specific location.
     /// Non-existing paths and directories will ignore `:line:row` suffix.
     ///
-    /// URLs can either be `file://` or `zed://` scheme, or relative to <https://zed.dev>.
+    /// URLs can either be `file://` or `mini://` scheme, or relative to <https://mini-editor.com>.
     paths_or_urls: Vec<String>,
 
     /// Pairs of file paths to diff. Can be specified multiple times.
@@ -1353,7 +1353,7 @@ fn parse_url_arg(arg: &str, cx: &App) -> String {
         Ok(path) => format!("file://{}", path.display()),
         Err(_) => {
             if arg.starts_with("file://")
-                || arg.starts_with("zed-cli://")
+                || arg.starts_with("mini-cli://")
                 || arg.starts_with("ssh://")
                 || parse_zed_link(arg, cx).is_some()
             {

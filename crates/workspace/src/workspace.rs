@@ -134,15 +134,15 @@ use crate::{item::ItemBufferKind, notifications::NotificationId};
 
 pub const SERIALIZATION_THROTTLE_TIME: Duration = Duration::from_millis(200);
 
-static ZED_WINDOW_SIZE: LazyLock<Option<Size<Pixels>>> = LazyLock::new(|| {
-    env::var("ZED_WINDOW_SIZE")
+static MINI_WINDOW_SIZE: LazyLock<Option<Size<Pixels>>> = LazyLock::new(|| {
+    env::var("MINI_WINDOW_SIZE")
         .ok()
         .as_deref()
         .and_then(parse_pixel_size_env_var)
 });
 
-static ZED_WINDOW_POSITION: LazyLock<Option<Point<Pixels>>> = LazyLock::new(|| {
-    env::var("ZED_WINDOW_POSITION")
+static MINI_WINDOW_POSITION: LazyLock<Option<Point<Pixels>>> = LazyLock::new(|| {
+    env::var("MINI_WINDOW_POSITION")
         .ok()
         .as_deref()
         .and_then(parse_pixel_position_env_var)
@@ -6390,8 +6390,8 @@ fn leader_border_for_pane(
 }
 
 fn window_bounds_env_override() -> Option<Bounds<Pixels>> {
-    ZED_WINDOW_POSITION
-        .zip(*ZED_WINDOW_SIZE)
+    MINI_WINDOW_POSITION
+        .zip(*MINI_WINDOW_SIZE)
         .map(|(position, size)| Bounds {
             origin: position,
             size,

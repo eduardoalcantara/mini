@@ -305,7 +305,7 @@ pub fn build_window_options(display_uuid: Option<Uuid>, cx: &mut App) -> WindowO
             .find(|display| display.uuid().ok() == Some(uuid))
     });
     let app_id = ReleaseChannel::global(cx).app_id();
-    let window_decorations = match std::env::var("ZED_WINDOW_DECORATIONS") {
+    let window_decorations = match std::env::var("MINI_WINDOW_DECORATIONS") {
         Ok(val) if val == "server" => gpui::WindowDecorations::Server,
         Ok(val) if val == "client" => gpui::WindowDecorations::Client,
         _ => match WorkspaceSettings::get_global(cx).window_decorations {
@@ -336,7 +336,7 @@ pub fn build_window_options(display_uuid: Option<Uuid>, cx: &mut App) -> WindowO
             height: px(240.0),
         }),
         tabbing_identifier: if use_system_window_tabs {
-            Some(String::from("zed"))
+            Some(String::from("mini"))
         } else {
             None
         },
@@ -486,7 +486,7 @@ fn unstable_version_notification(cx: &mut App) {
     ) {
         return;
     }
-    let db_key = "zed_windows_nightly_notif_shown_at".to_owned();
+    let db_key = "mini_windows_nightly_notif_shown_at".to_owned();
     let time = chrono::Utc::now();
     if let Some(last_shown) = db::kvp::KEY_VALUE_STORE
         .read_kvp(&db_key)
@@ -507,14 +507,14 @@ fn unstable_version_notification(cx: &mut App) {
     struct WindowsNightly;
     show_app_notification(NotificationId::unique::<WindowsNightly>(), cx, |cx| {
         cx.new(|cx| {
-            MessageNotification::new("You're using an unstable version of Zed (Nightly)", cx)
+            MessageNotification::new("You're using an unstable version of mini (Nightly)", cx)
                 .primary_message("Download Stable")
                 .primary_icon_color(Color::Accent)
                 .primary_icon(IconName::Download)
                 .primary_on_click(|window, cx| {
                     window.dispatch_action(
                         zed_actions::OpenBrowser {
-                            url: "https://zed.dev/download".to_string(),
+                            url: "https://mini-editor.com/download".to_string(),
                         }
                         .boxed_clone(),
                         cx,
@@ -532,7 +532,7 @@ fn initialize_file_watcher(window: &mut Window, cx: &mut Context<Workspace>) {
             db::indoc! {r#"
             inotify_init returned {}
 
-            This may be due to system-wide limits on inotify instances. For troubleshooting see: https://zed.dev/docs/linux
+            This may be due to system-wide limits on inotify instances. For troubleshooting see: https://mini-editor.com/docs/linux
             "#},
             e
         );
@@ -546,7 +546,7 @@ fn initialize_file_watcher(window: &mut Window, cx: &mut Context<Workspace>) {
         cx.spawn(async move |_, cx| {
             if prompt.await == Ok(0) {
                 cx.update(|cx| {
-                    cx.open_url("https://zed.dev/docs/linux#could-not-start-inotify");
+                    cx.open_url("https://mini-editor.com/docs/linux#could-not-start-inotify");
                     cx.quit();
                 })
                 .ok();
@@ -563,7 +563,7 @@ fn initialize_file_watcher(window: &mut Window, cx: &mut Context<Workspace>) {
             db::indoc! {r#"
             ReadDirectoryChangesW initialization failed: {}
 
-            This may occur on network filesystems and WSL paths. For troubleshooting see: https://zed.dev/docs/windows
+            This may occur on network filesystems and WSL paths. For troubleshooting see: https://mini-editor.com/docs/windows
             "#},
             e
         );
@@ -577,7 +577,7 @@ fn initialize_file_watcher(window: &mut Window, cx: &mut Context<Workspace>) {
         cx.spawn(async move |_, cx| {
             if prompt.await == Ok(0) {
                 cx.update(|cx| {
-                    cx.open_url("https://zed.dev/docs/windows");
+                    cx.open_url("https://mini-editor.com/docs/windows");
                     cx.quit()
                 })
                 .ok();
@@ -592,29 +592,29 @@ fn show_software_emulation_warning_if_needed(
     window: &mut Window,
     cx: &mut Context<Workspace>,
 ) {
-    if specs.is_software_emulated && std::env::var("ZED_ALLOW_EMULATED_GPU").is_err() {
+    if specs.is_software_emulated && std::env::var("MINI_ALLOW_EMULATED_GPU").is_err() {
         let (graphics_api, docs_url, open_url) = if cfg!(target_os = "windows") {
             (
                 "DirectX",
-                "https://zed.dev/docs/windows",
-                "https://zed.dev/docs/windows",
+                "https://mini-editor.com/docs/windows",
+                "https://mini-editor.com/docs/windows",
             )
         } else {
             (
                 "Vulkan",
-                "https://zed.dev/docs/linux",
-                "https://zed.dev/docs/linux#zed-fails-to-open-windows",
+                "https://mini-editor.com/docs/linux",
+                "https://mini-editor.com/docs/linux#mini-fails-to-open-windows",
             )
         };
         let message = format!(
             db::indoc! {r#"
-            Zed uses {} for rendering and requires a compatible GPU.
+            mini uses {} for rendering and requires a compatible GPU.
 
             Currently you are using a software emulated GPU ({}) which
             will result in awful performance.
 
             For troubleshooting see: {}
-            Set ZED_ALLOW_EMULATED_GPU=1 env var to permanently override.
+            Set MINI_ALLOW_EMULATED_GPU=1 env var to permanently override.
             "#},
             graphics_api, specs.device_name, docs_url
         );

@@ -198,7 +198,7 @@ members = [
     "crates/workspace",
     "crates/worktree",
     "crates/x_ai",
-    "crates/zed",
+    "crates/mini",
     "crates/zed_actions",
     "crates/zed_env_vars",
     "crates/edit_prediction_cli",
@@ -221,8 +221,14 @@ members = [
 
     "tooling/perf",
     "tooling/xtask",
+    "crates/mini_core",
+    "crates/mini_ui",
+    "crates/mini_theme",
+    "crates/mini_sync",
+    "crates/mini_updater",
+    "crates/mini_os",
 ]
-default-members = ["crates/zed"]
+default-members = ["crates/mini"]
 
 [workspace.package]
 publish = false
@@ -428,7 +434,7 @@ web_search_providers = { path = "crates/web_search_providers" }
 workspace = { path = "crates/workspace" }
 worktree = { path = "crates/worktree" }
 x_ai = { path = "crates/x_ai" }
-zed = { path = "crates/zed" }
+mini = { path = "crates/mini" }
 zed_actions = { path = "crates/zed_actions" }
 zed_env_vars = { path = "crates/zed_env_vars" }
 edit_prediction = { path = "crates/edit_prediction" }
@@ -855,8 +861,9 @@ zed_actions = { codegen-units = 1 }
 
 [profile.release]
 debug = "limited"
+opt-level = 2          # Reduzido de 3 para 2 (economiza RAM)
 lto = "thin"
-codegen-units = 1
+codegen-units = 16     # Aumentado de 1 para 16 (distribui carga)
 
 [profile.release.package]
 zed = { codegen-units = 16 }

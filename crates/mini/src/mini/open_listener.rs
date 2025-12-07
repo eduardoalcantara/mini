@@ -80,32 +80,32 @@ impl OpenRequest {
         }
 
         for url in request.urls {
-            if let Some(server_name) = url.strip_prefix("zed-cli://") {
+            if let Some(server_name) = url.strip_prefix("mini-cli://") {
                 this.kind = Some(OpenRequestKind::CliConnection(connect_to_cli(server_name)?));
-            } else if let Some(action_index) = url.strip_prefix("zed-dock-action://") {
+            } else if let Some(action_index) = url.strip_prefix("mini-dock-action://") {
                 this.kind = Some(OpenRequestKind::DockMenuAction {
                     index: action_index.parse()?,
                 });
             } else if let Some(file) = url.strip_prefix("file://") {
                 this.parse_file_path(file)
-            } else if let Some(file) = url.strip_prefix("zed://file") {
+            } else if let Some(file) = url.strip_prefix("mini://file") {
                 this.parse_file_path(file)
-            } else if let Some(file) = url.strip_prefix("zed://ssh") {
+            } else if let Some(file) = url.strip_prefix("mini://ssh") {
                 let ssh_url = "ssh:/".to_string() + file;
                 this.parse_ssh_file_path(&ssh_url, cx)?
-            } else if let Some(extension_id) = url.strip_prefix("zed://extension/") {
+            } else if let Some(extension_id) = url.strip_prefix("mini://extension/") {
                 this.kind = Some(OpenRequestKind::Extension {
                     extension_id: extension_id.to_string(),
                 });
-            } else if url == "zed://agent" {
+            } else if url == "mini://agent" {
                 this.kind = Some(OpenRequestKind::AgentPanel);
-            } else if let Some(schema_path) = url.strip_prefix("zed://schemas/") {
+            } else if let Some(schema_path) = url.strip_prefix("mini://schemas/") {
                 this.kind = Some(OpenRequestKind::BuiltinJsonSchema {
                     schema_path: schema_path.to_string(),
                 });
-            } else if url == "zed://settings" || url == "zed://settings/" {
+            } else if url == "mini://settings" || url == "mini://settings/" {
                 this.kind = Some(OpenRequestKind::Setting { setting_path: None });
-            } else if let Some(setting_path) = url.strip_prefix("zed://settings/") {
+            } else if let Some(setting_path) = url.strip_prefix("mini://settings/") {
                 this.kind = Some(OpenRequestKind::Setting {
                     setting_path: Some(setting_path.to_string()),
                 });
@@ -179,7 +179,7 @@ impl OpenRequest {
                 return Ok(());
             }
         }
-        anyhow::bail!("invalid zed url: {request_path}")
+        anyhow::bail!("invalid mini url: {request_path}")
     }
 }
 
@@ -647,7 +647,7 @@ pub async fn derive_paths_with_position(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::zed::{open_listener::open_local_workspace, tests::init_test};
+    use crate::mini::{open_listener::open_local_workspace, tests::init_test};
     use cli::{
         CliResponse,
         ipc::{self},
