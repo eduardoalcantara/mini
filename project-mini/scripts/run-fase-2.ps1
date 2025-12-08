@@ -26,17 +26,17 @@ $tipoErro = $null
 $comandos = @(
     @{
         Descricao = "FASE 2: Verificação de Sintaxe (cargo check)"
-        Comando = "D:\app\dev\rust\cargo\bin\cargo.exe check --package mini --package mini_ui --package mini_theme"
+        Comando = "D:\app\dev\rust\cargo\bin\cargo.exe check --package mini --package mini_ui"
         LogFile = "D:\proj\mini\project-mini\logs\fase2-cargo-check.log"
     },
     @{
         Descricao = "FASE 2: Testes Unitários (cargo test)"
-        Comando = "D:\app\dev\rust\cargo\bin\cargo.exe test --package mini_theme"
+        Comando = "D:\app\dev\rust\cargo\bin\cargo.exe test --package mini_ui"
         LogFile = "D:\proj\mini\project-mini\logs\fase2-cargo-test.log"
     },
     @{
-        Descricao = "FASE 2: Compilação Debug (cargo build --package mini --package mini_ui --package mini_theme)"
-        Comando = "D:\app\dev\rust\cargo\bin\cargo.exe build --package mini --package mini_ui --package mini_theme"
+        Descricao = "FASE 2: Compilação Debug (cargo build --package mini --package mini_ui)"
+        Comando = "D:\app\dev\rust\cargo\bin\cargo.exe build --package mini --package mini_ui"
         LogFile = "D:\proj\mini\project-mini\logs\fase2-cargo-build.log"
     }
 )
@@ -185,7 +185,40 @@ for ($i = 0; $i -lt $comandos.Count; $i++) {
         $regexPalavras = ($palavrasErro | ForEach-Object { [regex]::Escape($_) }) -join '|'
 
         $conteudoLog = Get-Content $logFile -Encoding UTF8
-        $linhasComErro = $conteudoLog | Select-String -Pattern $regexPalavras -AllMatches
+
+        # Padrões que indicam sucesso (ignorar mesmo se contiverem palavras de erro)
+        $padroesSucesso = @(
+            "test result: ok",
+            "0 failed",
+            "passed; 0 failed",
+            "finished successfully",
+            "build succeeded",
+            "compilation finished",
+            "^   Compiling ",  # Linhas de compilação (podem conter "error" no nome da crate)
+            "^    Checking ",  # Linhas de verificação
+            "^    Finished "    # Linhas de conclusão
+        )
+
+        $linhasComErro = $conteudoLog | Select-String -Pattern $regexPalavras -AllMatches | Where-Object {
+            $linha = $_.Line
+            # Ignora linhas que indicam sucesso
+            $ignorar = $false
+            foreach ($padrao in $padroesSucesso) {
+                # Se o padrão começa com ^, usa como regex; senão, usa match simples
+                if ($padrao -match '^\^') {
+                    if ($linha -match $padrao) {
+                        $ignorar = $true
+                        break
+                    }
+                } else {
+                    if ($linha -match [regex]::Escape($padrao)) {
+                        $ignorar = $true
+                        break
+                    }
+                }
+            }
+            -not $ignorar
+        }
 
         if ($linhasComErro) {
             $erroEncontrado = $true

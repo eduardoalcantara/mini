@@ -1,0 +1,24 @@
+warning: profile package spec `zed` in profile `release` did not match any packages
+
+help: a package with a similar name exists: `aes`
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.68s
+     Running unittests src\lib.rs (target\debug\deps\mini_ui-750869766ad4ab26.exe)
+
+running 8 tests
+test window_manager::tests::test_locked_movement_prevents_drag ... ok
+test window_manager::tests::test_maximized_state_not_saved_as_position ... ok
+test window_manager::tests::test_multi_monitor_position_save ... ok
+test window_manager::tests::test_position_restoration_after_minimize ... ok
+test window_state::tests::test_window_state_default ... ok
+test window_manager::tests::test_preset_sizes_calculate_correctly ... ok
+test window_state::tests::test_window_state_serialization ... ok
+test window_manager::tests::test_window_position_with_margins ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests mini_ui
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

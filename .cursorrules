@@ -192,7 +192,7 @@
 - **SEMPRE termine uma resposta** com uma nova linha: `**Resposta Nº** x` onde x é o número incremental da resposta no chat.
 - **SEMPRE termine uma resposta** com uma nova linha indicando o modelo usado: `**Modelo:** m` onde m é o modelo de IA atual (ex: Claude 3.5 Sonnet, GPT-4, etc).
 - **SEMPRE termine uma resposta** com uma nova linha: `**Tempo de Execução:** mm:ss` indicando tempo em minutos e segundos desde o início até o fim da última resposta (última tarefa), não é do tempo de resposta do chat inteiro.
-- **SEMPRE que terminar uma tarefa/resposta que tenha durado mais de 2 minutos**, execute:
+- **SEMPRE que terminar uma tarefa/resposta, execute:
 
 ```
 D:\proj\cast\run\cast.exe send me "Tarefa nº XX Concluída: \n\n RR"

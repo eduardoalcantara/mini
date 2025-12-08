@@ -1,5 +1,4 @@
 warning: profile package spec `zed` in profile `release` did not match any packages
 
 help: a package with a similar name exists: `aes`
-    Checking mini v0.1.0 (D:\proj\mini\crates\mini)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.66s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.64s

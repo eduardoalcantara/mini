@@ -1,14 +1,11 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! mini_ui - UI components for the mini editor
+//!
+//! This crate provides tray icon functionality, window state management,
+//! window positioning features, welcome screen, and editor UI components
+//! for the mini editor.
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub mod tray_icon;
+pub mod window_state;
+pub mod window_manager;
+pub mod welcome_screen;
+pub mod editor_margin;

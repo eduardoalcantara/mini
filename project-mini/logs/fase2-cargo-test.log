@@ -1,0 +1,2 @@
+﻿Comando 'FASE 2: Testes Unitários (cargo test)' não executado por causa de erros na execução do comando 'FASE 2: Verificação de Sintaxe (cargo check)'
+Tipo de erro: exit-code
