@@ -26,8 +26,9 @@ try {
   go install github.com/wailsapp/wails/v2/cmd/wails@v2.12.0
   if ($LASTEXITCODE -ne 0) { throw "go install wails falhou com codigo $LASTEXITCODE" }
 
-  Write-Host "Instalando golangci-lint v1.64.8..."
-  go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
+  # v2.x — alinhado a .cursor/rules/ENVIRONMENT-RULES-v1.0.md (nao usar import path v1)
+  Write-Host "Instalando golangci-lint v2.11.4..."
+  go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.11.4
   if ($LASTEXITCODE -ne 0) { throw "go install golangci-lint falhou com codigo $LASTEXITCODE" }
 }
 finally {

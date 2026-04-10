@@ -14,4 +14,4 @@ Na raiz do repositório (PowerShell):
 
 Requisitos: **Go** instalado (`go version`), com rede para baixar módulos.
 
-Versões alinhadas ao projeto: Wails **v2.12.0** (mesmo `go.mod`); golangci-lint pinado no script.
+Versões alinhadas ao projeto: Wails **v2.12.0** (mesmo `go.mod`); **golangci-lint v2.x** (`v2.11.4`, mesmo módulo que em `ENVIRONMENT-RULES-v1.0.md`).
