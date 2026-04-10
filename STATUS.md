@@ -32,5 +32,6 @@
 
 ## Pendências imediatas
 
-- Definir próxima spec em `project/specs/doing/` (ex.: gestão de ficheiros, abas, config)
+- Lote em `project/specs/to-do/`: config-service → (paralelo) fontes-embed → context-menu — ver `project/specs/to-do/2026-04-10-README-batch-specs.md`
+- Próxima spec ativa: mover uma para `project/specs/doing/` quando o PO iniciar a sprint
 - Temas adicionais em `frontend/src/styles/themes/` quando a spec de UX avançar
