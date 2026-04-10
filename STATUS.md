@@ -2,7 +2,7 @@
 
 ## Situação atual
 
-- Fase: editor CodeMirror 6 integrado ao frontend (vanilla ESM + importmap)
+- Fase: janela Windows com barra de título “invisível” (`CustomTheme` + titlebar de arrasto), editor CodeMirror sem fold gutter, scrollbar temática
 - Estado: `wails build`, `go build` e `golangci-lint` validados; validação visual em `wails dev` recomendada ao PO
 - Escopo atual: próximas specs funcionais (ficheiros, abas, persistência, etc.)
 

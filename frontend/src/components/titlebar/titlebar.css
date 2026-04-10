@@ -1,0 +1,9 @@
+.titlebar {
+  height: 32px;
+  width: 100%;
+  background-color: var(--color-bg);
+  --wails-draggable: drag;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}

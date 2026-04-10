@@ -2,8 +2,8 @@
 **Autor:** Perplexity (Arquiteto/Supervisor IA)
 **Data:** 2026-04-10
 **Versão:** 1.0
-**Status:** TO-DO
-**Arquivo:** `project/specs/to-do/2026-04-10-SPEC-janela-ui-chrome.md`
+**Status:** DONE
+**Arquivo:** `project/specs/done/2026-04-10-SPEC-janela-ui-chrome.md`
 
 ---
 

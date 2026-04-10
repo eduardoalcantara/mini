@@ -1,10 +1,8 @@
 .editor-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
   width: 100%;
   min-height: 0;
-  overflow: hidden;
 }
 
 .editor-container .cm-editor {
@@ -15,4 +13,27 @@
 .editor-container .cm-scroller {
   overflow: auto;
   padding: var(--space-4) var(--space-4);
+}
+
+.editor-container ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.editor-container ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.editor-container ::-webkit-scrollbar-thumb {
+  background-color: var(--color-muted);
+  border-radius: 9999px;
+  border: none;
+}
+
+.editor-container ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-text-muted);
+}
+
+.editor-container ::-webkit-scrollbar-corner {
+  background: transparent;
 }
