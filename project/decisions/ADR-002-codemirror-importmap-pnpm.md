@@ -2,7 +2,7 @@
 
 **Data:** 2026-04-10  
 **Status:** ACEITO  
-**Versão:** 1.0
+**Versão:** 1.1
 
 ---
 
@@ -14,7 +14,7 @@ A stack exige CodeMirror 6 com HTML/CSS/JS vanilla, **sem** Vite/Webpack na fase
 
 ## Decisão 1 — `frontend/.npmrc` com `node-linker=hoisted`
 
-Com o layout **isolado** predefinido do pnpm, muitas dependências transitivas (ex.: `@codemirror/autocomplete` exigidas pelo meta-pacote `codemirror`) **não** aparecem em `frontend/node_modules/<pacote>/` na raiz, pelo que o **import map** não consegue resolver os bare specifiers no browser.
+Com o layout **isolado** predefinido do pnpm, muitas dependências transitivas (ex.: `@codemirror/autocomplete`) **não** aparecem em `frontend/node_modules/<pacote>/` na raiz, pelo que o **import map** não consegue resolver os bare specifiers no browser. O projeto **não** usa o meta-pacote `codemirror` no `package.json` — apenas `@codemirror/*` explícitos; ver **ADR-001, Decisão 4**.
 
 **Decisão:** usar `node-linker=hoisted` em `frontend/.npmrc` para um `node_modules` plano compatível com os caminhos do import map.
 

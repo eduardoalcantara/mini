@@ -2,7 +2,7 @@
 
 **Data:** 2026-04-10  
 **Status:** ACEITO  
-**Versão:** 1.2
+**Versão:** 1.3
 
 ---
 
@@ -30,8 +30,16 @@ O embed em `main.go` usa `//go:embed all:frontend/dist` — o diretório correto
 ## Decisão 3 — Módulo Go e nome do binário
 
 - Módulo: `mini` (sem espaços em `go.mod`).
-- Nome de exibição: **Mini** (`wails.json` → `name`, `main.go` → `Title`, `index.html` → `<title>`).
+- Nome de exibição: **Mini** (`wails.json` → `name`, `index.html` → `<title>`). O `Title` em `main.go` pode ficar vazio por spec de UI (barra nativa “invisível”); o binário continua `mini.exe` via `"outputfilename": "mini"`.
 - Binário Windows: `mini.exe` via `"outputfilename": "mini"`.
+
+---
+
+## Decisão 4 — CodeMirror: sem meta-pacote `codemirror`
+
+- O `package.json` do frontend **não** deve listar o pacote npm **`codemirror`** (meta-pacote que agrega reexportações e `basicSetup`).
+- O código importa **apenas** pacotes **`@codemirror/*`** explícitos; o **import map** em `frontend/index.html` **não** inclui entrada `"codemirror"` — reintroduzi-la sem alinhar dependências gera erro em runtime no WebView2 ou resolução ambígua.
+- Specs e alterações futuras: não voltar ao meta-pacote sem rever esta decisão e o **`ADR-002`** (hoisting pnpm + caminhos do import map).
 
 ---
 
