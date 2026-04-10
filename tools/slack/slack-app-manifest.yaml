@@ -1,0 +1,41 @@
+# Manifesto Slack — Incoming Webhooks (schema v2)
+# Docs: https://docs.slack.dev/app-manifests/configuring-apps-with-app-manifests/
+# Referência de campos: https://docs.slack.dev/reference/app-manifest
+#
+# Create App → From an app manifest → colar este YAML
+
+_metadata:
+  major_version: 2
+  minor_version: 1
+
+display_information:
+  # name: no máximo 35 caracteres
+  name: mini Notify
+  # description: no máximo 140 caracteres (uma linha)
+  description: >-
+    Notificações locais (build, lint, tarefas) do projeto mini; nunca envie segredos.
+  # long_description: opcional; até 4000 caracteres
+  long_description: >
+    Este app existe para receber mensagens via Incoming Webhooks disparadas por scripts
+    na máquina de desenvolvimento (build, lint, conclusão de tarefa). Use apenas resumos
+    operacionais. A URL do webhook é credencial: não versionar nem compartilhar em canais
+    públicos. Um webhook pode ser associado a um canal ou DM conforme a configuração no Slack.
+  background_color: "#1e1e1e"
+
+features:
+  bot_user:
+    display_name: mini Notify
+    always_online: false
+
+oauth_config:
+  scopes:
+    bot:
+      - incoming-webhook
+
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
+  # Incoming Webhooks ficam em settings, não em features (ver documentação).
+  incoming_webhooks:
+    incoming_webhooks_enabled: true
