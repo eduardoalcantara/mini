@@ -1,9 +1,15 @@
+/* Altura zerada: a barra de título nativa (Windows) já ocupa o topo; evita faixa ~32px duplicada. */
 .titlebar {
-  height: 32px;
+  box-sizing: border-box;
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
   width: 100%;
-  background-color: var(--color-bg);
+  background-color: transparent;
   --wails-draggable: drag;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
+  overflow: hidden;
+  line-height: 0;
 }
