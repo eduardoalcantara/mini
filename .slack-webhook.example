@@ -1,0 +1,4 @@
+# Copie para .slack-webhook e cole a URL do Incoming Webhook (uma linha).
+# O ficheiro .slack-webhook esta no .gitignore.
+
+https://hooks.slack.com/services/XXX/YYY/ZZZ

@@ -1,5 +1,9 @@
 # Envia uma mensagem para o Slack via Incoming Webhook.
-# Requer a variavel de ambiente: SLACK_MINI_WEBHOOK
+# Requer SLACK_MINI_WEBHOOK no processo (slack-invoke.ps1 hidrata a partir de
+# variavel User/Machine ou ficheiro .slack-webhook na raiz do repo).
+#
+# Os scripts build.ps1 e lint.ps1 usam slack-invoke.ps1, que so chama este script
+# quando o webhook esta definido (evita exit 1 por webhook ausente).
 #
 # Exemplos:
 #   .\scripts\slack-notify.ps1 -Text "Build concluido com sucesso"

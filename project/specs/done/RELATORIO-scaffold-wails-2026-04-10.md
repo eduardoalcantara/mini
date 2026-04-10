@@ -72,3 +72,33 @@
 
 - O erro de diálogo do Wails sobre **build tags** ocorre ao usar `go build`/`go run` sem o pipeline do CLI; não é causado por separar `src/` e `frontend/`. Referência: [Manual builds](https://wails.io/docs/guides/manual-builds/).
 - Binário de referência: `build/bin/mini.exe` (não mais `editor-mini.exe` onde aplicável).
+
+---
+
+## Build correto segundo a documentação Wails (Manual builds)
+
+Fonte oficial: [Manual builds | Wails](https://wails.io/docs/guides/manual-builds/) (v2.12.0 no site).
+
+**Pipeline do `wails build` / `wails dev` (resumo):**
+
+1. Instalar dependências do frontend (comando em `frontend:install`, se definido).
+2. Build do frontend (comando em `frontend:build`, ex.: `pnpm run build` — no repo, popula `frontend/dist/` para o embed).
+3. Gerar assets de empacotamento (ex.: `build/appicon.png`, ícone/manifest Windows, ficheiro `.syso` para linkagem).
+4. Compilar a aplicação Go.
+
+**Flags que o `wails build` aplica por defeito (produção):**
+
+- `-tags desktop,production` e `-ldflags "-w -s"`; no Windows a doc menciona também `-H windowsgui` nos ldflags.
+- Equivalente mínimo **manual** para produção (quando se replica o processo à mão):  
+  `go build -tags desktop,production -ldflags "-w -s -H windowsgui"`  
+  (e, no Windows, compilar na mesma pasta que o `.syso` — o CLI trata disso.)
+
+**Dev:** mínimo citado na doc: `go build -tags dev -gcflags "all=-N -l"`; no dia a dia usa-se `wails dev`.
+
+**Este repositório:** build padronizado com `tools/wails.exe build` ou `.\scripts\build.ps1` na raiz; não se assume `go build` sozinho para o binário desktop.
+
+---
+
+## Ferramentas locais (pós-clone)
+
+- `scripts/install-tools.ps1` — instala `tools/wails.exe` e `tools/golangci-lint` **v2** em `tools/` (`GOBIN`), alinhado a `ENVIRONMENT-RULES-v1.0.md`. Binários não são versionados (`.gitignore`).

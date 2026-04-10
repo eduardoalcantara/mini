@@ -2,7 +2,7 @@
 
 **Data:** 2026-04-10  
 **Status:** ACEITO  
-**Versão:** 1.1 (reaplicado após recuperação do repositório)
+**Versão:** 1.2
 
 ---
 
@@ -35,9 +35,30 @@ O embed em `main.go` usa `//go:embed all:frontend/dist` — o diretório correto
 
 ---
 
-## Build tags (Wails)
+## Build correto (fonte: Wails — [Manual builds](https://wails.io/docs/guides/manual-builds/))
 
-Compilar só com `go build` / `go run` na raiz **sem** o CLI gera erro em tempo de execução. Usar `wails build` ou `wails dev`, ou seguir [Manual builds](https://wails.io/docs/guides/manual-builds/) (tags `desktop,production` em producao).
+O CLI do Wails documenta o que `wails build` e `wails dev` fazem em sequência: instalar dependências do frontend (`frontend:install` em `wails.json`), rodar o build do frontend (`frontend:build`), gerar assets de empacotamento (ícone, manifest no Windows, `.syso` via winres), e **compilar** a aplicação Go com flags próprias.
+
+### O que o `wails build` usa (produção)
+
+- Tags Go padrão: `-tags desktop,production` com `-ldflags "-w -s"`.
+- No **Windows**, o documento indica também `-ldflags` incluindo `-H windowsgui` (janela sem console).
+- Build **manual** equivalente ao de produção (mínimo citado na doc):  
+  `go build -tags desktop,production -ldflags "-w -s -H windowsgui"`
+
+### Desenvolvimento
+
+- Mínimo para build de **dev**:  
+  `go build -tags dev -gcflags "all=-N -l"`  
+  (na prática o time usa `wails dev`.)
+
+### Windows e `.syso`
+
+- A doc exige compilar **no mesmo diretório** em que está o ficheiro **`.syso`** gerado no passo de empacotamento; o CLI do Wails cuida disso. Um `go build` isolado na raiz **sem** esse passo quebra o empacotamento ou as tags esperadas.
+
+### Por que não usar só `go build` na raiz
+
+Sem o pipeline do CLI (ou sem replicar tags, ldflags e assets), o binário pode até gerar, mas o **runtime Wails** pode falhar (ex.: diálogo a recomendar Manual builds). O projeto padroniza **`wails build`** via `scripts/build.ps1` a partir da raiz do repositório.
 
 ---
 

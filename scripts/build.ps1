@@ -11,13 +11,16 @@
 # Uso:
 #   .\scripts\build.ps1
 #
-# Envia notificacao Slack apenas em caso de falha (se slack-notify.ps1 existir).
+# Slack (opcional):
+#   - Falha: envia se SLACK_MINI_WEBHOOK estiver definida.
+#   - Sucesso: envia se SLACK_MINI_WEBHOOK e SLACK_MINI_NOTIFY_SUCCESS=1 (evita spam).
 
 $ErrorActionPreference = "Stop"
 
+. (Join-Path $PSScriptRoot "slack-invoke.ps1")
+
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $wailsExe = Join-Path $repoRoot "tools\wails.exe"
-$slackNotify = Join-Path $PSScriptRoot "slack-notify.ps1"
 $frontendDist = Join-Path $repoRoot "frontend\dist"
 $outExe = Join-Path $repoRoot "build\bin\mini.exe"
 
@@ -39,11 +42,14 @@ try {
 
   Write-Host "Build OK: $outExe"
   Write-Host "Assets embarcados (embed): $frontendDist"
+
+  if ($env:SLACK_MINI_NOTIFY_SUCCESS -eq "1") {
+    $okMsg = "Build OK (wails) em $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') — $outExe"
+    Send-SlackNotification -Text $okMsg
+  }
 }
 catch {
-  if (Test-Path $slackNotify) {
-    $msg = "Falha no build (wails build) em $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-    & $slackNotify -Text $msg
-  }
+  $msg = "Falha no build (wails build) em $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+  Send-SlackNotification -Text $msg
   throw
 }
