@@ -31,6 +31,9 @@
   --space-3: 12px;
   --space-4: var(--space-md);
 
+  /* Respiro mínimo entre o contorno da janela e o bloco do editor (gutter + texto) */
+  --editor-page-inset: 1cm;
+
   --transition-ui: 180ms ease;
   --transition-panel: 200ms ease;
 }

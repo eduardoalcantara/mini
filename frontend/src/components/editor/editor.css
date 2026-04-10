@@ -3,6 +3,8 @@
   flex-direction: column;
   width: 100%;
   min-height: 0;
+  box-sizing: border-box;
+  padding: var(--editor-page-inset);
 }
 
 .editor-container .cm-editor {
@@ -12,7 +14,6 @@
 
 .editor-container .cm-scroller {
   overflow: auto;
-  padding: var(--space-4);
 }
 
 .editor-container ::-webkit-scrollbar {
