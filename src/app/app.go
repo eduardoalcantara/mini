@@ -7,10 +7,13 @@ import (
 
 	"mini/src/models"
 	"mini/src/services"
+
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App e a struct principal de bindings do Wails.
 type App struct {
+	ctx    context.Context
 	config *services.ConfigService
 }
 
@@ -21,13 +24,23 @@ func New() *App {
 
 // Startup e chamado pelo Wails quando a aplicacao inicia.
 func (a *App) Startup(ctx context.Context) {
-	_ = ctx
+	a.ctx = ctx
 	cfg, err := services.NewConfigService()
 	if err != nil {
 		slog.Error("falha ao inicializar ConfigService", "err", err)
 		return
 	}
 	a.config = cfg
+}
+
+// SetWindowBackground atualiza a cor de fundo da janela (WebView + barra nativa no Windows).
+func (a *App) SetWindowBackground(r, g, b uint8) {
+	runtime.WindowSetBackgroundColour(a.ctx, r, g, b, 255)
+}
+
+// SetWindowTitle atualiza o título da janela e da taskbar.
+func (a *App) SetWindowTitle(title string) {
+	runtime.WindowSetTitle(a.ctx, title)
 }
 
 // GetConfig retorna a configuração atual do usuário.

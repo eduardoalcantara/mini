@@ -3,7 +3,6 @@ import { getConfig, setConfig } from "../../../bindings/index.js";
 /** @typedef {{ theme: string, font: string, font_size: number, line_wrap: boolean, line_numbers: boolean }} AppConfig */
 
 let menuEl = null;
-let hoverTimer = null;
 
 /**
  * @param {unknown} c
@@ -374,8 +373,15 @@ function itemRow(iconName, label, shortcut, onClick) {
  */
 function checkableRow(label, checked, onClick) {
   const d = document.createElement("div");
-  d.className = "context-menu-item" + (checked ? " context-menu-item--checked" : "");
-  d.innerHTML = `<span class="icon"></span><span class="context-menu-item__label">${label}</span>`;
+  d.className = "context-menu-item";
+  const checkEl = document.createElement("span");
+  checkEl.className = "context-menu-item__check";
+  checkEl.textContent = checked ? "check" : "";
+  const labelEl = document.createElement("span");
+  labelEl.className = "context-menu-item__label";
+  labelEl.textContent = label;
+  d.appendChild(checkEl);
+  d.appendChild(labelEl);
   d.addEventListener("click", async (e) => {
     e.stopPropagation();
     await onClick();

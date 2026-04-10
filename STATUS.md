@@ -2,8 +2,8 @@
 
 ## Situação atual
 
-- Fase: **ConfigService** (`config.json` junto ao exe), **fontes embed** (EB Garamond, JetBrains Mono, Material Symbols ~5,3MB), **menu de contexto** com integração a config e evento `config-changed`
-- Estado: `wails build`, `go build` e `golangci-lint` validados; validar em `wails dev` cortar/copiar/colar e persistência do `config.json`
+- Fase: Config + fontes + menu; **correções visuais v1** (check no menu, `SetWindowBackground`/`SetWindowTitle`, seleção vs linha ativa, submenu com scroll, padding scroller)
+- Estado: `wails build`, `go build` e `golangci-lint` validados; validar em `wails dev` se `WindowSetBackgroundColour` atualiza a barra nativa no Windows (ver relatório da spec)
 - Escopo atual: abrir/guardar ficheiros, abas, persistência de documentos (próximas specs)
 
 ## Decisão vigente

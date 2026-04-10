@@ -7,3 +7,7 @@ export function GetConfig():Promise<models.Config>;
 export function ResolveFont(arg1:string):Promise<models.FontResult>;
 
 export function SetConfig(arg1:models.Config):Promise<void>;
+
+export function SetWindowBackground(arg1:number,arg2:number,arg3:number):Promise<void>;
+
+export function SetWindowTitle(arg1:string):Promise<void>;

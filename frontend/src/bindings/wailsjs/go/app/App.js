@@ -13,3 +13,11 @@ export function ResolveFont(arg1) {
 export function SetConfig(arg1) {
   return window['go']['app']['App']['SetConfig'](arg1);
 }
+
+export function SetWindowBackground(arg1, arg2, arg3) {
+  return window['go']['app']['App']['SetWindowBackground'](arg1, arg2, arg3);
+}
+
+export function SetWindowTitle(arg1) {
+  return window['go']['app']['App']['SetWindowTitle'](arg1);
+}

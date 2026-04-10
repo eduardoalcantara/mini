@@ -17,6 +17,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+::selection {
+  background-color: var(--color-selection);
+  color: var(--color-text-on-selection);
+}
+
 #app {
   display: flex;
   flex-direction: column;

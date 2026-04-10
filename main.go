@@ -20,7 +20,7 @@ func main() {
 	appInstance := app.New()
 
 	err := wails.Run(&options.App{
-		Title:             "",
+		Title:             "Mini",
 		Width:             1100,
 		Height:            700,
 		MinWidth:          600,

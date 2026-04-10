@@ -76,8 +76,14 @@ const editorTheme = EditorView.theme(
       fontSize: "var(--text-editor-active)",
     },
     ".cm-cursor": { borderLeftColor: "var(--color-accent)" },
-    ".cm-focused .cm-selectionBackground, ::selection": {
-      backgroundColor: "var(--color-surface-2)",
+    "&.cm-focused .cm-selectionBackground": {
+      backgroundColor: "var(--color-selection) !important",
+    },
+    ".cm-selectionBackground": {
+      backgroundColor: "var(--color-selection-inactive) !important",
+    },
+    ".cm-content ::selection": {
+      color: "var(--color-text-on-selection) !important",
     },
     ".cm-gutters": {
       backgroundColor: "var(--color-bg)",

@@ -1,6 +1,10 @@
 import { createEditor } from "./components/editor/editor.js";
 import { initContextMenu } from "./components/ui/context-menu/context-menu.js";
 import { getConfig, resolveFont } from "./bindings/index.js";
+import {
+  setAppWindowTitle,
+  syncNativeWindowBackground,
+} from "./theme/native-chrome.js";
 
 const mountEl = document.getElementById("editor-mount");
 
@@ -9,6 +13,8 @@ if (!mountEl) {
 } else {
   (async () => {
     const cfg = await getConfig();
+    await setAppWindowTitle("Mini");
+    await syncNativeWindowBackground(cfg.theme ?? "perplexity-dark");
     const fontRes = await resolveFont(".md");
     const { view, applyEditorChrome } = createEditor(mountEl, "", cfg, fontRes);
     window.__editorView = view;
@@ -16,6 +22,7 @@ if (!mountEl) {
 
     document.addEventListener("config-changed", async (e) => {
       const c = e.detail;
+      await syncNativeWindowBackground(c.theme ?? "perplexity-dark");
       const fr = await resolveFont(".md");
       applyEditorChrome(c, fr);
     });
