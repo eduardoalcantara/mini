@@ -1,0 +1,16 @@
+:root {
+  --color-bg: #1a1a1f;
+  --color-surface: #212127;
+  --color-text: #d4d4d0;
+  --color-accent: #5aafdf;
+  --color-muted: #555560;
+
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --font-size-base: 14px;
+  --line-height-base: 1.6;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+}

@@ -2,9 +2,9 @@
 
 ## Situação atual
 
-- Fase: reinício do projeto
-- Estado: estrutura base do novo repositório em construção
-- Escopo atual: organização inicial de pastas e documentos de governança
+- Fase: scaffold técnico da stack Go + Wails concluído
+- Estado: base executável inicial validada (build, lint e dev)
+- Escopo atual: preparar próxima spec funcional (editor e fluxos de UI)
 
 ## Decisão vigente
 
@@ -14,6 +14,6 @@
 
 ## Pendências imediatas
 
-- Criar e priorizar novas specs em `project/specs/to-do/`
 - Criar ADR-001 com a decisão arquitetural formal
-- Definir bootstrap técnico de `src/` e `frontend/`
+- Definir próxima spec em `project/specs/doing/` para iniciar features de produto
+- Evoluir frontend de scaffold mínimo para estrutura funcional de editor

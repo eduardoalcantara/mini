@@ -1,0 +1,10 @@
+{
+  "name": "editor-mini-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "echo \"frontend dev server not configured yet\"",
+    "build": "echo \"frontend build not configured yet\" && exit 0"
+  }
+}
