@@ -2,9 +2,9 @@
 
 ## Situação atual
 
-- Fase: scaffold técnico da stack Go + Wails concluído
-- Estado: base executável inicial validada (build, lint e dev)
-- Escopo atual: preparar próxima spec funcional (editor e fluxos de UI)
+- Fase: editor CodeMirror 6 integrado ao frontend (vanilla ESM + importmap)
+- Estado: `wails build`, `go build` e `golangci-lint` validados; validação visual em `wails dev` recomendada ao PO
+- Escopo atual: próximas specs funcionais (ficheiros, abas, persistência, etc.)
 
 ## Decisão vigente
 
@@ -12,10 +12,13 @@
 - Decisão estratégica: descontinuar a base ativa em Rust/Zed para este novo ciclo
 - Arquivos legados: preservados em `legacy/` para consulta histórica
 - Estrutura Wails + frontend: `project/decisions/ADR-001-estrutura-wails-frontend.md`
+- CodeMirror + importmap + pnpm hoisted: `project/decisions/ADR-002-codemirror-importmap-pnpm.md`
+- Frontend JS: ES modules sem bundler; CodeMirror 6 via `pnpm` + importmap; `frontend/.npmrc` com `node-linker=hoisted` (crítico — ver `00-project.md`)
 
 ## Build, pastas e o que não confundir
 
 - **`frontend/dist/`** — saída do `pnpm run build` (HTML/CSS/JS) embutida via `//go:embed all:frontend/dist` em `main.go`.
+- **`frontend/dist/node_modules/`** — cópia completa de `frontend/node_modules/` para o embed (CodeMirror e dependências).
 - **`build/` na raiz** — recursos de empacotamento Wails (ícone, manifest Windows), não é o mesmo que `frontend/dist/`.
 - **`build/bin/`** — saída do `wails build` (`mini.exe`). Entrada no `.gitignore`; regenere com `.\scripts\build.ps1`.
 - **`go build` sozinho** não substitui `wails build` para o app desktop (tags e pipeline do CLI). Ver [Manual builds](https://wails.io/docs/guides/manual-builds/).
@@ -28,5 +31,5 @@
 
 ## Pendências imediatas
 
-- Definir próxima spec em `project/specs/doing/` para iniciar features de produto
-- Evoluir frontend de scaffold mínimo para estrutura funcional de editor
+- Definir próxima spec em `project/specs/doing/` (ex.: gestão de ficheiros, abas, config)
+- Temas adicionais em `frontend/src/styles/themes/` quando a spec de UX avançar

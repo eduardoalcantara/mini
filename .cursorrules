@@ -3,3 +3,5 @@
 - Leia **TODOS** os arquivos em `.cursor/rules/` antes de qualquer tarefa.
 - Ordem obrigatória: `00-project.md` → `01-architecture.md` → `02-workflow.md` → `03-quality.md`.
 - Sem exceções.
+
+O detalhe (fluxo, Slack, qualidade, ambiente) está **só** nesses ficheiros — **não** duplicar protocolos neste ficheiro.

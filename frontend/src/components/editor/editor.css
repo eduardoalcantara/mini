@@ -1,0 +1,18 @@
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.editor-container .cm-editor {
+  height: 100%;
+  outline: none;
+}
+
+.editor-container .cm-scroller {
+  overflow: auto;
+  padding: var(--space-4) var(--space-4);
+}

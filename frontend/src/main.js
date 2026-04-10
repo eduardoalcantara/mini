@@ -1,4 +1,10 @@
-const appRoot = document.getElementById("app");
-if (appRoot) {
-  appRoot.innerHTML = "";
+import { createEditor } from "./components/editor/editor.js";
+
+const mountEl = document.getElementById("editor-mount");
+
+if (!mountEl) {
+  console.error("[mini] #editor-mount não encontrado");
+} else {
+  const view = createEditor(mountEl, "");
+  window.__editorView = view;
 }

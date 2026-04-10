@@ -1,16 +1,36 @@
 :root {
+  /* Superfícies */
   --color-bg: #1a1a1f;
   --color-surface: #212127;
+  --color-surface-2: #2a2a32;
+  --color-border: #3a3a44;
   --color-text: #d4d4d0;
-  --color-accent: #5aafdf;
   --color-muted: #555560;
+  --color-text-muted: var(--color-muted);
+  --color-text-faint: #6e6e78;
+  --color-accent: #5aafdf;
 
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --font-editor-text: var(--font-mono);
   --font-size-base: 14px;
+  --text-editor: var(--font-size-base);
+  --text-editor-code: 14px;
   --line-height-base: 1.6;
+  --line-height-editor: var(--line-height-base);
+
+  --font-ui: system-ui, sans-serif;
+  --text-ui-sm: 13px;
+  --text-ui-base: 14px;
 
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 32px;
+  --space-1: var(--space-xs);
+  --space-2: var(--space-sm);
+  --space-3: 12px;
+  --space-4: var(--space-md);
+
+  --transition-ui: 180ms ease;
+  --transition-panel: 200ms ease;
 }

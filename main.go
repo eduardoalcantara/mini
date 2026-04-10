@@ -19,7 +19,7 @@ func main() {
 	appInstance := app.New()
 
 	err := wails.Run(&options.App{
-		Title:  "Mini",
+		Title:  "mini",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{

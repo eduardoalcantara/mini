@@ -1,7 +1,0 @@
-{
-  "name": "mini",
-  "private": true,
-  "version": "0.1.0",
-  "description": "mini editor workspace bootstrap",
-  "packageManager": "pnpm@10.15.0"
-}

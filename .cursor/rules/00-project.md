@@ -66,6 +66,7 @@ Editor de texto minimalista, elegante e multiplataforma, construído do zero com
 │   └── models/                   ← Structs compartilhadas
 │
 └── frontend/                     ← UI web
+    ├── .npmrc                    ← pnpm (hoisted — necessário ao importmap / CodeMirror)
     ├── index.html
     └── src/
         ├── styles/
@@ -96,3 +97,7 @@ Editor de texto minimalista, elegante e multiplataforma, construído do zero com
 - Qualquer arquivo em `project/decisions/` — sem autorização explícita do PO
 
 **NUNCA** altere `STATUS.md` sem atualizar seu conteúdo de fato.
+
+### Configuração frontend crítica
+
+- **`frontend/.npmrc`** — contém `node-linker=hoisted`, necessário para que dependências transitivas do CodeMirror fiquem em `node_modules/<nome>/` e o **importmap** funcione no WebView2 **sem bundler**. **Não remover.** Alterações a este ficheiro **só com aprovação explícita do PO** (risco de quebra silenciosa do editor).

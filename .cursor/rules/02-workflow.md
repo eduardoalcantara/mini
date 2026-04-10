@@ -117,18 +117,18 @@ Execute na ordem — só avance se o passo anterior passar:
 
 - **SEMPRE** termine cada resposta com: `**Resposta Nº** x` (incremental na sessão)
 - **SEMPRE** termine cada resposta com: `**Modelo:** [modelo atual]`
-- Ao finalizar qualquer tarefa, execute obrigatoriamente:
+- **Ao finalizar qualquer spec ou tarefa relevante** (código entregue, relatório em `done/`, `STATUS.md` atualizado), o agente **deve** enviar notificação ao Slack:
   ```powershell
-  $RepoRoot = Split-Path -Parent $PSScriptRoot
-  & "$RepoRoot\scripts\slack-notify.ps1" -Text "Tarefa nº XX concluída: RR"
+  .\scripts\notify-task-done.ps1 -Summary "SPEC [nome] concluída — [uma linha]"
   ```
-  Onde XX = número do prompt, RR = resumo em até 4000 caracteres
-- Em caso de erro no lint ou build, execute imediatamente:
+  Executar a partir da **raiz do repositório**. O script usa `slack-invoke.ps1` (webhook: variável `SLACK_MINI_WEBHOOK`, registo Windows User/Machine, ou ficheiro `.slack-webhook` na raiz — ver `scripts/slack-invoke.ps1`).
+- Em caso de **erro** no lint ou build (após tentativa de correção), notificar:
   ```powershell
-  & "$RepoRoot\scripts\slack-notify.ps1" -Text "⚠️ ERRO — Tarefa nº XX: [descrição do erro]"
+  .\scripts\notify-task-done.ps1 -Summary "ERRO: [lint|build|wails] — [mensagem curta]"
   ```
-- A variável de ambiente `SLACK_MINI_WEBHOOK` deve estar configurada na máquina — **NUNCA** hardcode da URL no código ou scripts
-- Se `slack-notify.ps1` não estiver disponível ou `SLACK_MINI_WEBHOOK` não estiver definida: reportar no chat e continuar a tarefa — a notificação não é bloqueante
+  Ou usar `slack-notify.ps1 -Text "..."` diretamente se preferir texto longo.
+- **NUNCA** hardcodar URL de webhook no código; `.slack-webhook` está no `.gitignore`.
+- Se o webhook não estiver disponível: **avisar no chat do Cursor** e continuar — a notificação não bloqueia a entrega.
 
 ---
 

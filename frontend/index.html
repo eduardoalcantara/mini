@@ -1,15 +1,47 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mini</title>
-  <link rel="stylesheet" href="/src/styles/tokens.css" />
-  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="src/styles/tokens.css" />
+  <link rel="stylesheet" href="src/styles/base.css" />
+  <link rel="stylesheet" href="src/components/editor/editor.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "codemirror": "./node_modules/codemirror/dist/index.js",
+      "@codemirror/state": "./node_modules/@codemirror/state/dist/index.js",
+      "@codemirror/view": "./node_modules/@codemirror/view/dist/index.js",
+      "@codemirror/commands": "./node_modules/@codemirror/commands/dist/index.js",
+      "@codemirror/language": "./node_modules/@codemirror/language/dist/index.js",
+      "@codemirror/lang-markdown": "./node_modules/@codemirror/lang-markdown/dist/index.js",
+      "@codemirror/autocomplete": "./node_modules/@codemirror/autocomplete/dist/index.js",
+      "@codemirror/lint": "./node_modules/@codemirror/lint/dist/index.js",
+      "@codemirror/search": "./node_modules/@codemirror/search/dist/index.js",
+      "@codemirror/lang-html": "./node_modules/@codemirror/lang-html/dist/index.js",
+      "@codemirror/lang-css": "./node_modules/@codemirror/lang-css/dist/index.js",
+      "@codemirror/lang-javascript": "./node_modules/@codemirror/lang-javascript/dist/index.js",
+      "@lezer/common": "./node_modules/@lezer/common/dist/index.js",
+      "@lezer/highlight": "./node_modules/@lezer/highlight/dist/index.js",
+      "@lezer/lr": "./node_modules/@lezer/lr/dist/index.js",
+      "@lezer/markdown": "./node_modules/@lezer/markdown/dist/index.js",
+      "@lezer/html": "./node_modules/@lezer/html/dist/index.js",
+      "@lezer/css": "./node_modules/@lezer/css/dist/index.js",
+      "@lezer/javascript": "./node_modules/@lezer/javascript/dist/index.js",
+      "@marijn/find-cluster-break": "./node_modules/@marijn/find-cluster-break/src/index.js",
+      "crelt": "./node_modules/crelt/index.js",
+      "style-mod": "./node_modules/style-mod/src/style-mod.js",
+      "w3c-keyname": "./node_modules/w3c-keyname/index.js"
+    }
+  }
+  </script>
 </head>
 <body>
-  <div id="app"></div>
-  <script src="/src/bindings/index.js" type="module"></script>
-  <script src="/src/main.js" type="module"></script>
+  <div id="app">
+    <div class="editor-container" id="editor-mount"></div>
+  </div>
+  <script src="src/bindings/index.js" type="module"></script>
+  <script src="src/main.js" type="module"></script>
 </body>
 </html>
