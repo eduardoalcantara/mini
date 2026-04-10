@@ -75,6 +75,7 @@ Editor de texto minimalista, elegante e multiplataforma, construído do zero com
         │   └── themes/
         ├── components/
         │   ├── editor/
+        │   ├── titlebar/           ← Wails draggable; altura 0 (ver ADR-003)
         │   ├── sidebar/
         │   ├── tabs/
         │   └── statusbar/
@@ -101,3 +102,7 @@ Editor de texto minimalista, elegante e multiplataforma, construído do zero com
 ### Configuração frontend crítica
 
 - **`frontend/.npmrc`** — contém `node-linker=hoisted`, necessário para que dependências transitivas do CodeMirror fiquem em `node_modules/<nome>/` e o **importmap** funcione no WebView2 **sem bundler**. **Não remover.** Alterações a este ficheiro **só com aprovação explícita do PO** (risco de quebra silenciosa do editor).
+
+### CSS (janela e editor)
+
+- Ordem de carregamento e responsabilidades: **`ADR-003`** em `project/decisions/`. Invariante principal: **margem de página** no `.editor-container`, não só no `.cm-scroller` (estrutura DOM do CodeMirror 6).

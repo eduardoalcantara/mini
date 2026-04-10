@@ -2,7 +2,7 @@
 
 ## Situação atual
 
-- Fase: janela Windows com barra de título “invisível” (`CustomTheme` + titlebar de arrasto), editor CodeMirror sem fold gutter, scrollbar temática
+- Fase: janela Windows com barra de título “invisível” (`CustomTheme` + titlebar HTML sem altura extra), editor CodeMirror sem fold gutter, margem de página `--editor-page-inset`, scrollbar temática
 - Estado: `wails build`, `go build` e `golangci-lint` validados; validação visual em `wails dev` recomendada ao PO
 - Escopo atual: próximas specs funcionais (ficheiros, abas, persistência, etc.)
 
@@ -13,6 +13,7 @@
 - Arquivos legados: preservados em `legacy/` para consulta histórica
 - Estrutura Wails + frontend: `project/decisions/ADR-001-estrutura-wails-frontend.md`
 - CodeMirror + importmap + pnpm hoisted: `project/decisions/ADR-002-codemirror-importmap-pnpm.md`
+- CSS janela + editor (tokens, base, titlebar, inset CM6): `project/decisions/ADR-003-css-ui-chrome-editor.md`
 - Frontend JS: ES modules sem bundler; CodeMirror 6 via `pnpm` + importmap; `frontend/.npmrc` com `node-linker=hoisted` (crítico — ver `00-project.md`)
 
 ## Build, pastas e o que não confundir
