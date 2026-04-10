@@ -10,7 +10,7 @@ import {
   highlightActiveLine,
   keymap,
 } from "@codemirror/view";
-import { EditorState } from "@codemirror/state";
+import { Compartment, EditorState } from "@codemirror/state";
 import {
   history,
   defaultKeymap,
@@ -27,9 +27,17 @@ import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
 import { markdown } from "@codemirror/lang-markdown";
 
-const minimalSetup = [
-  lineNumbers(),
-  highlightActiveLineGutter(),
+const gutterCompartment = new Compartment();
+const wrapCompartment = new Compartment();
+
+function gutterExtensions(showLineNumbers) {
+  if (!showLineNumbers) {
+    return [];
+  }
+  return [lineNumbers(), highlightActiveLineGutter()];
+}
+
+const sharedCore = [
   highlightSpecialChars(),
   history(),
   drawSelection(),
@@ -58,11 +66,15 @@ const editorTheme = EditorView.theme(
       height: "100%",
       backgroundColor: "var(--color-bg)",
       color: "var(--color-text)",
-      fontFamily: "var(--font-editor-text)",
-      fontSize: "var(--text-editor)",
+      fontFamily: "var(--font-editor-active)",
+      fontSize: "var(--text-editor-active)",
       lineHeight: "var(--line-height-editor)",
     },
-    ".cm-content": { caretColor: "var(--color-accent)" },
+    ".cm-content": {
+      caretColor: "var(--color-accent)",
+      fontFamily: "var(--font-editor-active)",
+      fontSize: "var(--text-editor-active)",
+    },
     ".cm-cursor": { borderLeftColor: "var(--color-accent)" },
     ".cm-focused .cm-selectionBackground, ::selection": {
       backgroundColor: "var(--color-surface-2)",
@@ -79,21 +91,87 @@ const editorTheme = EditorView.theme(
 );
 
 /**
- * @param {HTMLElement} parentEl
- * @param {string} [initialContent]
- * @returns {import("@codemirror/view").EditorView}
+ * @param {string} slug
+ * @returns {string}
  */
-export function createEditor(parentEl, initialContent = "") {
-  const state = EditorState.create({
-    doc: initialContent,
-    extensions: [
-      ...minimalSetup,
-      markdown(),
-      EditorView.lineWrapping,
-      editorTheme,
+export function fontFamilyFromSlug(slug) {
+  if (slug === "jetbrains-mono") {
+    return 'var(--font-editor-code)';
+  }
+  return 'var(--font-editor-text)';
+}
+
+/**
+ * @param {HTMLElement} mountEl
+ * @param {object} cfg
+ * @param {{ font: string, font_size: number }} fontResult
+ */
+export function applyChromeToMount(mountEl, cfg, fontResult) {
+  if (cfg?.theme) {
+    document.documentElement.dataset.theme = cfg.theme;
+  }
+  const slug = fontResult?.font ?? "eb-garamond";
+  const size = fontResult?.font_size ?? cfg?.font_size ?? 16;
+  mountEl.style.setProperty("--font-editor-active", fontFamilyFromSlug(slug));
+  mountEl.style.setProperty("--text-editor-active", `${size}px`);
+}
+
+/**
+ * @param {import("@codemirror/view").EditorView} view
+ * @param {object} cfg
+ */
+export function applyEditorConfig(view, cfg) {
+  view.dispatch({
+    effects: [
+      gutterCompartment.reconfigure(gutterExtensions(!!cfg.line_numbers)),
+      wrapCompartment.reconfigure(cfg.line_wrap ? EditorView.lineWrapping : []),
     ],
   });
-  return new EditorView({ state, parent: parentEl });
+}
+
+/**
+ * @param {HTMLElement} parentEl
+ * @param {string} [initialContent]
+ * @param {object} [cfg]
+ * @param {{ font: string, font_size: number } | null} [fontResult]
+ */
+export function createEditor(parentEl, initialContent = "", cfg = {}, fontResult = null) {
+  const lineWrap = cfg.line_wrap !== false;
+  const lineNums = cfg.line_numbers !== false;
+
+  const extensions = [
+    gutterCompartment.of(gutterExtensions(lineNums)),
+    ...sharedCore,
+    wrapCompartment.of(lineWrap ? EditorView.lineWrapping : []),
+    markdown(),
+    editorTheme,
+  ];
+
+  const state = EditorState.create({
+    doc: initialContent,
+    extensions,
+  });
+  const view = new EditorView({ state, parent: parentEl });
+
+  const fr =
+    fontResult ??
+    ({
+      font: "eb-garamond",
+      font_size: cfg.font_size ?? 16,
+    });
+
+  const applyAll = (nextCfg, nextFont) => {
+    applyChromeToMount(parentEl, nextCfg, nextFont);
+    applyEditorConfig(view, nextCfg);
+  };
+
+  applyChromeToMount(parentEl, cfg, fr);
+  applyEditorConfig(view, cfg);
+
+  return {
+    view,
+    applyEditorChrome: applyAll,
+  };
 }
 
 /**

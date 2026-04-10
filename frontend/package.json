@@ -15,6 +15,9 @@
     "@codemirror/search": "^6.6.0",
     "@codemirror/state": "^6.6.0",
     "@codemirror/view": "^6.41.0",
-    "@lezer/highlight": "^1.2.3"
+    "@fontsource/eb-garamond": "^5.2.7",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@lezer/highlight": "^1.2.3",
+    "material-symbols": "^0.44.1"
   }
 }

@@ -2,9 +2,9 @@
 
 ## Situação atual
 
-- Fase: janela Windows com barra de título “invisível” (`CustomTheme` + titlebar HTML sem altura extra), editor CodeMirror sem fold gutter, margem de página `--editor-page-inset`, scrollbar temática
-- Estado: `wails build`, `go build` e `golangci-lint` validados; validação visual em `wails dev` recomendada ao PO
-- Escopo atual: próximas specs funcionais (ficheiros, abas, persistência, etc.)
+- Fase: **ConfigService** (`config.json` junto ao exe), **fontes embed** (EB Garamond, JetBrains Mono, Material Symbols ~5,3MB), **menu de contexto** com integração a config e evento `config-changed`
+- Estado: `wails build`, `go build` e `golangci-lint` validados; validar em `wails dev` cortar/copiar/colar e persistência do `config.json`
+- Escopo atual: abrir/guardar ficheiros, abas, persistência de documentos (próximas specs)
 
 ## Decisão vigente
 
@@ -32,6 +32,6 @@
 
 ## Pendências imediatas
 
-- Lote em `project/specs/to-do/`: config-service → (paralelo) fontes-embed → context-menu — ver `project/specs/to-do/2026-04-10-README-batch-specs.md`
-- Próxima spec ativa: mover uma para `project/specs/doing/` quando o PO iniciar a sprint
-- Temas adicionais em `frontend/src/styles/themes/` quando a spec de UX avançar
+- Implementar ações reais de **Arquivo** (novo/abrir/guardar) e diálogos quando a spec existir
+- Afinar temas claros + realce de sintaxe CodeMirror para modo light (UX)
+- Lote concluído: relatório `project/specs/done/RELATORIO-lote-config-fontes-menu-2026-04-10.md`, índice `project/specs/done/2026-04-10-README-batch-specs.md`

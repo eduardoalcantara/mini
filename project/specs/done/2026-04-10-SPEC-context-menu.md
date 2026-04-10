@@ -2,8 +2,8 @@
 **Autor:** Perplexity (Arquiteto/Supervisor IA)
 **Data:** 2026-04-10
 **Versão:** 1.0
-**Status:** TO-DO
-**Arquivo:** `project/specs/to-do/2026-04-10-SPEC-context-menu.md`
+**Status:** DONE
+**Arquivo:** `project/specs/done/2026-04-10-SPEC-context-menu.md`
 
 **Pipeline:** executar **depois** de `SPEC-config-service` e `SPEC-fontes-embed`. Ver [`2026-04-10-README-batch-specs.md`](./2026-04-10-README-batch-specs.md).
 

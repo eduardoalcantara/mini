@@ -11,8 +11,11 @@
   --color-accent: #5aafdf;
 
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
-  --font-editor-text: var(--font-mono);
   --font-size-base: 14px;
+  --font-editor-text: "EB Garamond", Georgia, serif;
+  --font-editor-code: "JetBrains Mono", Consolas, monospace;
+  --font-editor-active: var(--font-editor-text);
+  --text-editor-active: var(--font-size-base);
   --text-editor: var(--font-size-base);
   --text-editor-code: 14px;
   --line-height-base: 1.6;
@@ -36,4 +39,42 @@
 
   --transition-ui: 180ms ease;
   --transition-panel: 200ms ease;
+}
+
+/* Temas (valores mínimos — afinar em spec de UX futura); perplexity-dark = :root */
+
+:root[data-theme="github-light-default"] {
+  --color-bg: #ffffff;
+  --color-surface: #f6f8fa;
+  --color-surface-2: #eaeef2;
+  --color-border: #d0d7de;
+  --color-text: #1f2328;
+  --color-muted: #656d76;
+  --color-text-muted: #57606a;
+  --color-text-faint: #8c959f;
+  --color-accent: #0969da;
+}
+
+:root[data-theme="claude-code-light"] {
+  --color-bg: #faf9f5;
+  --color-surface: #f0eee6;
+  --color-surface-2: #e6e3d9;
+  --color-border: #d4d0c4;
+  --color-text: #2d2a26;
+  --color-muted: #6b6560;
+  --color-text-muted: #7a736b;
+  --color-text-faint: #9a948a;
+  --color-accent: #c47a2c;
+}
+
+:root[data-theme="moleskine-light"] {
+  --color-bg: #f7f4ee;
+  --color-surface: #efe9df;
+  --color-surface-2: #e4dcd0;
+  --color-border: #cfc4b5;
+  --color-text: #2c2825;
+  --color-muted: #6f6860;
+  --color-text-muted: #80786e;
+  --color-text-faint: #9a9286;
+  --color-accent: #8b4513;
 }

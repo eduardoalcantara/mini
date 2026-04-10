@@ -42,4 +42,4 @@ SPEC-context-menu    ←── só após as duas anteriores concluídas
 
 ## Estado
 
-As três specs estão em **`project/specs/to-do/`** com status **TO-DO** até o PO mover a ativa para `doing/` e o dev fechar com relatório em `done/`.
+**Concluído em 2026-04-10** — ver `RELATORIO-lote-config-fontes-menu-2026-04-10.md`.
