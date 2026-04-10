@@ -10,18 +10,25 @@
 .editor-container .cm-editor {
   height: 100%;
   outline: none;
+  /* Garante flexível sem esmagar a gutter */
+  min-width: 0;
 }
 
+/* Padding NÃO vai em .cm-scroller — quebra position:sticky da gutter no CM6 */
 .editor-container .cm-scroller {
   overflow: auto;
-  padding: var(--space-4) var(--space-4);
-  padding-right: calc(var(--space-4) + var(--space-2));
-  scroll-padding-right: var(--space-2);
+}
+
+/* Gutter dentro do scroller: sticky à esquerda ao scroll horizontal */
+.editor-container .cm-gutters {
+  position: sticky;
+  left: 0;
+  z-index: 200;
 }
 
 .editor-container ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 11px;
+  height: 11px;
 }
 
 .editor-container ::-webkit-scrollbar-track {
@@ -31,7 +38,8 @@
 .editor-container ::-webkit-scrollbar-thumb {
   background-color: var(--color-muted);
   border-radius: 9999px;
-  border: none;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .editor-container ::-webkit-scrollbar-thumb:hover {

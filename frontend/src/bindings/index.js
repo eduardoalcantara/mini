@@ -4,6 +4,7 @@ import {
   ResolveFont,
   SetWindowBackground,
   SetWindowTitle,
+  SetWindowsTheme,
 } from "./wailsjs/go/app/App.js";
 
 export async function getConfig() {
@@ -24,4 +25,8 @@ export function setWindowBackground(r, g, b) {
 
 export function setWindowTitle(title) {
   return SetWindowTitle(title);
+}
+
+export function setWindowsTheme(useLight) {
+  return SetWindowsTheme(useLight);
 }

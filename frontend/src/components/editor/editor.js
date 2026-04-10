@@ -26,9 +26,11 @@ import {
 import { closeBrackets, closeBracketsKeymap } from "@codemirror/autocomplete";
 import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
 import { markdown } from "@codemirror/lang-markdown";
+import { isLightTheme } from "../../theme/native-chrome.js";
 
 const gutterCompartment = new Compartment();
 const wrapCompartment = new Compartment();
+const themeCompartment = new Compartment();
 
 function gutterExtensions(showLineNumbers) {
   if (!showLineNumbers) {
@@ -60,41 +62,59 @@ const sharedCore = [
   ]),
 ];
 
-const editorTheme = EditorView.theme(
-  {
-    "&": {
-      height: "100%",
-      backgroundColor: "var(--color-bg)",
-      color: "var(--color-text)",
-      fontFamily: "var(--font-editor-active)",
-      fontSize: "var(--text-editor-active)",
-      lineHeight: "var(--line-height-editor)",
+/**
+ * @param {boolean} darkFlag — alinhado a cm-light / cm-dark do CodeMirror
+ */
+function createEditorViewTheme(darkFlag) {
+  return EditorView.theme(
+    {
+      "&": {
+        height: "100%",
+        backgroundColor: "var(--color-bg)",
+        color: "var(--color-text)",
+        fontFamily: "var(--font-editor-active)",
+        fontSize: "var(--text-editor-active)",
+        lineHeight: "var(--line-height-editor)",
+      },
+      ".cm-content": {
+        caretColor: "var(--color-accent)",
+        fontFamily: "var(--font-editor-active)",
+        fontSize: "var(--text-editor-active)",
+        paddingTop: "var(--space-4)",
+        paddingLeft: "var(--space-4)",
+        paddingRight: "calc(var(--space-4) + var(--editor-scrollbar-room))",
+        paddingBottom: "calc(var(--space-4) + var(--editor-scrollbar-room))",
+      },
+      ".cm-cursor": { borderLeftColor: "var(--color-accent)" },
+      /* Seleção desenhada na camada do CM6 (não só .cm-selectionBackground genérico) */
+      "&.cm-focused .cm-scroller > .cm-selectionLayer .cm-selectionBackground": {
+        background: "var(--color-selection) !important",
+      },
+      "&:not(.cm-focused) .cm-scroller > .cm-selectionLayer .cm-selectionBackground": {
+        background: "var(--color-selection-inactive) !important",
+      },
+      ".cm-content ::selection": {
+        backgroundColor: "var(--color-selection)",
+        color: "var(--color-text-on-selection)",
+      },
+      ".cm-gutters": {
+        backgroundColor: "var(--color-bg)",
+        color: "var(--color-text-muted)",
+        border: "none",
+      },
+      ".cm-activeLineGutter": { backgroundColor: "var(--color-surface)" },
+      ".cm-activeLine": { backgroundColor: "var(--color-surface)" },
     },
-    ".cm-content": {
-      caretColor: "var(--color-accent)",
-      fontFamily: "var(--font-editor-active)",
-      fontSize: "var(--text-editor-active)",
-    },
-    ".cm-cursor": { borderLeftColor: "var(--color-accent)" },
-    "&.cm-focused .cm-selectionBackground": {
-      backgroundColor: "var(--color-selection) !important",
-    },
-    ".cm-selectionBackground": {
-      backgroundColor: "var(--color-selection-inactive) !important",
-    },
-    ".cm-content ::selection": {
-      color: "var(--color-text-on-selection) !important",
-    },
-    ".cm-gutters": {
-      backgroundColor: "var(--color-bg)",
-      color: "var(--color-text-muted)",
-      border: "none",
-    },
-    ".cm-activeLineGutter": { backgroundColor: "var(--color-surface)" },
-    ".cm-activeLine": { backgroundColor: "var(--color-surface)" },
-  },
-  { dark: true },
-);
+    { dark: darkFlag },
+  );
+}
+
+/**
+ * @param {object} cfg
+ */
+function cmDarkFlag(cfg) {
+  return !isLightTheme(cfg?.theme);
+}
 
 /**
  * @param {string} slug
@@ -102,9 +122,9 @@ const editorTheme = EditorView.theme(
  */
 export function fontFamilyFromSlug(slug) {
   if (slug === "jetbrains-mono") {
-    return 'var(--font-editor-code)';
+    return "var(--font-editor-code)";
   }
-  return 'var(--font-editor-text)';
+  return "var(--font-editor-text)";
 }
 
 /**
@@ -131,6 +151,7 @@ export function applyEditorConfig(view, cfg) {
     effects: [
       gutterCompartment.reconfigure(gutterExtensions(!!cfg.line_numbers)),
       wrapCompartment.reconfigure(cfg.line_wrap ? EditorView.lineWrapping : []),
+      themeCompartment.reconfigure(createEditorViewTheme(cmDarkFlag(cfg))),
     ],
   });
 }
@@ -150,7 +171,7 @@ export function createEditor(parentEl, initialContent = "", cfg = {}, fontResult
     ...sharedCore,
     wrapCompartment.of(lineWrap ? EditorView.lineWrapping : []),
     markdown(),
-    editorTheme,
+    themeCompartment.of(createEditorViewTheme(cmDarkFlag(cfg))),
   ];
 
   const state = EditorState.create({
@@ -161,10 +182,10 @@ export function createEditor(parentEl, initialContent = "", cfg = {}, fontResult
 
   const fr =
     fontResult ??
-    ({
+    {
       font: "eb-garamond",
       font_size: cfg.font_size ?? 16,
-    });
+    };
 
   const applyAll = (nextCfg, nextFont) => {
     applyChromeToMount(parentEl, nextCfg, nextFont);

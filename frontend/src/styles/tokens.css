@@ -9,9 +9,11 @@
   --color-text-muted: #888893;
   --color-text-faint: #6e6e78;
   --color-accent: #5aafdf;
-  --color-selection: rgba(90, 175, 223, 0.35);
-  --color-selection-inactive: rgba(90, 175, 223, 0.15);
+  --color-selection: rgba(90, 175, 223, 0.45);
+  --color-selection-inactive: rgba(90, 175, 223, 0.22);
   --color-text-on-selection: #ffffff;
+  /* Espaço extra para não colar texto às scrollbars (eixo H e V) */
+  --editor-scrollbar-room: 10px;
 
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
   --font-size-base: 14px;
@@ -56,8 +58,8 @@
   --color-text-muted: #57606a;
   --color-text-faint: #8c959f;
   --color-accent: #0969da;
-  --color-selection: rgba(9, 105, 218, 0.25);
-  --color-selection-inactive: rgba(9, 105, 218, 0.12);
+  --color-selection: rgba(9, 105, 218, 0.38);
+  --color-selection-inactive: rgba(9, 105, 218, 0.2);
   --color-text-on-selection: #1a1a1f;
 }
 
@@ -71,8 +73,8 @@
   --color-text-muted: #7a736b;
   --color-text-faint: #9a948a;
   --color-accent: #c47a2c;
-  --color-selection: rgba(196, 122, 44, 0.28);
-  --color-selection-inactive: rgba(196, 122, 44, 0.14);
+  --color-selection: rgba(196, 122, 44, 0.4);
+  --color-selection-inactive: rgba(196, 122, 44, 0.22);
   --color-text-on-selection: #1a1a1f;
 }
 
@@ -86,7 +88,7 @@
   --color-text-muted: #80786e;
   --color-text-faint: #9a9286;
   --color-accent: #8b4513;
-  --color-selection: rgba(139, 69, 19, 0.26);
-  --color-selection-inactive: rgba(139, 69, 19, 0.12);
+  --color-selection: rgba(139, 69, 19, 0.38);
+  --color-selection-inactive: rgba(139, 69, 19, 0.2);
   --color-text-on-selection: #1a1a1f;
 }

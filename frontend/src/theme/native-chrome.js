@@ -1,4 +1,4 @@
-import { setWindowBackground, setWindowTitle } from "../bindings/index.js";
+import { setWindowBackground, setWindowTitle, setWindowsTheme } from "../bindings/index.js";
 
 /** RGB de fundo por tema (alinhado a tokens.css) */
 const THEME_BG = {
@@ -9,13 +9,24 @@ const THEME_BG = {
 };
 
 /**
- * Sincroniza a cor de fundo nativa da janela com o tema (Windows/WebView).
+ * @param {string} themeSlug
+ * @returns {boolean}
+ */
+export function isLightTheme(themeSlug) {
+  const t = themeSlug ?? "";
+  return t.includes("light") || t === "github-light-default";
+}
+
+/**
+ * Sincroniza cor de fundo da janela + tema do chrome nativo Windows (barra de título).
  * @param {string} themeSlug
  */
-export async function syncNativeWindowBackground(themeSlug) {
-  const rgb = THEME_BG[themeSlug] ?? THEME_BG["perplexity-dark"];
+export async function syncNativeWindowChrome(themeSlug) {
+  const slug = themeSlug ?? "perplexity-dark";
+  const rgb = THEME_BG[slug] ?? THEME_BG["perplexity-dark"];
   const [r, g, b] = rgb;
   await setWindowBackground(r, g, b);
+  await setWindowsTheme(isLightTheme(slug));
 }
 
 /** Título inicial na taskbar (ficheiros: spec futura). */

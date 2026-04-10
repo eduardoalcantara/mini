@@ -43,6 +43,16 @@ func (a *App) SetWindowTitle(title string) {
 	runtime.WindowSetTitle(a.ctx, title)
 }
 
+// SetWindowsTheme alterna o tema do *chrome* nativo (barra de título) entre claro e escuro.
+// Deve acompanhar temas claros/escuros da app para a barra não ficar sempre no modo escuro do Windows.
+func (a *App) SetWindowsTheme(useLight bool) {
+	if useLight {
+		runtime.WindowSetLightTheme(a.ctx)
+		return
+	}
+	runtime.WindowSetDarkTheme(a.ctx)
+}
+
 // GetConfig retorna a configuração atual do usuário.
 func (a *App) GetConfig() (models.Config, error) {
 	if a.config == nil {
