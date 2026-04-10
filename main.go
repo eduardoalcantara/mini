@@ -19,7 +19,7 @@ func main() {
 	appInstance := app.New()
 
 	err := wails.Run(&options.App{
-		Title:  "Editor Minimalista",
+		Title:  "Mini",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{

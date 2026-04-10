@@ -5,6 +5,6 @@
   "packageManager": "pnpm@10.33.0",
   "scripts": {
     "dev": "echo \"frontend dev server not configured yet\"",
-    "build": "echo \"frontend build not configured yet\" && exit 0"
+    "build": "node scripts/copy-to-dist.cjs"
   }
 }

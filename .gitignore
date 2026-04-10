@@ -40,3 +40,9 @@ xcuserdata/
 .env
 .env.secret.toml
 /tools/*.exe
+
+# Saida local do Wails (binario); gere com .\scripts\build.ps1
+/build/bin/
+
+# Dependencias do frontend (pnpm em frontend/)
+frontend/node_modules/
